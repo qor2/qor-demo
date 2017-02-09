@@ -20,16 +20,14 @@ type Product struct {
 	Price float64
 }
 
-
-
-func main(){
+func main() {
 	DB, _ := gorm.Open("sqlite3", "demo.db")
 	defer DB.Close()
 
 	DB.AutoMigrate(&Product{})
 
 	// before export, we should add a new product
-	DB.Create(&Product{Name:"product", Code: "mycode", Price: 42.0})
+	DB.Create(&Product{Name: "product", Code: "mycode", Price: 42.0})
 
 	product := exchange.NewResource(&Product{}, exchange.Config{PrimaryField: "Code"})
 	product.Meta(&exchange.Meta{Name: "Code"})
